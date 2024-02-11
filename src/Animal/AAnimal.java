@@ -1,6 +1,8 @@
 package Animal;
 
-public abstract class AAnimal
+import Drawable.IDrawable;
+
+public abstract class AAnimal implements IDrawable
 {
 
 }

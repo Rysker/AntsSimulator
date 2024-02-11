@@ -1,6 +1,7 @@
 package World;
 
 import Animal.*;
+import Drawable.IDrawable;
 import Structure.*;
 
 import java.awt.*;
@@ -16,6 +17,7 @@ public class Block
 
     public Block(int x, int y)
     {
+        this.animals = new ArrayList<>();
         this.pheromone = null;
         if(x > 100 &&  x < 200 && y > 100 && y < 200)
             this.structure = new Wall();
@@ -30,6 +32,22 @@ public class Block
         return x;
     }
 
+    public void place(IDrawable obj)
+    {
+        if(obj instanceof AAnimal)
+        {
+            if(structure != null)
+                structure = new Empty();
+            this.animals.add((AAnimal) obj);
+        }
+        else if (obj instanceof AStructure)
+        {
+            this.structure = (AStructure) obj;
+            if(this.structure instanceof Wall)
+                this.animals.clear();
+        }
+
+    }
     public int getY()
     {
         return y;
@@ -37,7 +55,10 @@ public class Block
 
     public Color getColor()
     {
-        return this.structure.getColor();
+        if(this.structure != null && this.structure instanceof Empty && this.animals.size() != 0)
+            return this.animals.get(0).getColor();
+        else
+            return this.structure.getColor();
     }
 
 }

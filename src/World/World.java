@@ -2,10 +2,12 @@ package World;
 
 public class World
 {
+    public static int SIZE;
     private Block[][] blocks;
 
     public World(int size)
     {
+        this.SIZE = size;
         this.blocks = new Block[size][size];
         initializeWorld(size);
     }

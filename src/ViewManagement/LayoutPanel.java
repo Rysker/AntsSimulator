@@ -2,11 +2,14 @@ package ViewManagement;
 import javax.swing.*;
 import java.awt.*;
 
+import Mouse.*;
+
 public class LayoutPanel extends JPanel
 {
     private static LayoutPanel instance;
     private final SimulationPanel simulationPanel;
     private final OptionsMenu optionsMenu;
+    private Mouse mouse;
     private LayoutPanel()
     {
         setLayout(new GridBagLayout());
@@ -26,6 +29,10 @@ public class LayoutPanel extends JPanel
         c.weighty = 1.0;
         c.insets = new Insets(10, 10, 10, 10);
         add(simulationPanel, c);
+
+        this.mouse = new Mouse(this.simulationPanel);
+        this.simulationPanel.addMouseMotionListener(this.mouse);
+        this.simulationPanel.addMouseListener(this.mouse);
     }
 
     public static LayoutPanel getInstance()
@@ -44,5 +51,4 @@ public class LayoutPanel extends JPanel
     {
         return this.optionsMenu;
     }
-
 }

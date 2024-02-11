@@ -1,7 +1,10 @@
 package Structure;
+
 import java.awt.*;
 
-public abstract class AStructure
+import Drawable.IDrawable;
+
+public abstract class AStructure implements IDrawable
 {
     abstract public Color getColor();
 }

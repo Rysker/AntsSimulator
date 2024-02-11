@@ -9,4 +9,10 @@ public class Wall extends AStructure
     {
         return new Color(66, 66, 66);
     }
+
+    @Override
+    public String getClassName()
+    {
+        return "Wall";
+    }
 }

@@ -9,4 +9,10 @@ public class Empty extends AStructure
     {
         return new Color(0, 0, 0);
     }
+
+    @Override
+    public String getClassName()
+    {
+        return "Empty";
+    }
 }
