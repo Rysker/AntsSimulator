@@ -17,15 +17,15 @@ public class OptionsMenu extends JPanel implements ActionListener
 
         JToggleButton wallButton = createToggleButton("Wall");
         JToggleButton antButton = createToggleButton("Ant");
-        JToggleButton button3 = createToggleButton("Button 3");
+        JToggleButton rubberButton = createToggleButton("Rubber");
 
         buttonGroup.add(wallButton);
         buttonGroup.add(antButton);
-        buttonGroup.add(button3);
+        buttonGroup.add(rubberButton);
 
         add(wallButton);
         add(antButton);
-        add(button3);
+        add(rubberButton);
 
         SimulationPanel.tool = new Pointer();
     }
@@ -51,6 +51,9 @@ public class OptionsMenu extends JPanel implements ActionListener
                 break;
             case "Ant":
                 SimulationPanel.tool = new Brush("Ant");
+                break;
+            case "Rubber":
+                SimulationPanel.tool = new Brush("Rubber");
                 break;
             default:
                 break;

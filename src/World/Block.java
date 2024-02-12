@@ -43,8 +43,7 @@ public class Block
         else if (obj instanceof AStructure)
         {
             this.structure = (AStructure) obj;
-            if(this.structure instanceof Wall)
-                this.animals.clear();
+            this.animals.clear();
         }
 
     }

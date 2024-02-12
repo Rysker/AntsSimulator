@@ -9,8 +9,6 @@ public class Mouse extends MouseAdapter
     private SimulationPanel simulationPanel;
     private boolean enable = true;
     private boolean pressed = false;
-    private int mouseX;
-    private int mouseY;
 
     public Mouse(SimulationPanel simulationPanel)
     {
@@ -20,16 +18,18 @@ public class Mouse extends MouseAdapter
     @Override
     public void mousePressed(MouseEvent e)
     {
-        this.pressed = true;
-        invokeToolHandle(e.getX(), e.getY());
+        if(!this.pressed)
+        {
+            this.pressed = true;
+            invokeToolHandle(e.getX(), e.getY());
+        }
     }
 
     @Override
     public void mouseDragged(MouseEvent e)
     {
-        this.mouseX = e.getX();
-        this.mouseY = e.getY();
-        invokeToolHandle(mouseX, mouseY);
+        if (pressed)
+            invokeToolHandle(e.getX(), e.getY());
     }
 
     @Override
@@ -41,25 +41,30 @@ public class Mouse extends MouseAdapter
     @Override
     public void mouseMoved(MouseEvent e)
     {
-        this.mouseX = e.getX();
-        this.mouseY = e.getY();
-        this.paint(this.mouseX, this.mouseY);
-    }
-
-    public void enable()
-    {
-        this.enable = true;
+        if (!pressed)
+            this.simulationPanel.paintPreview(e.getX(), e.getY());
     }
 
     private void invokeToolHandle(int x, int y)
     {
-        if (enable && pressed)
-           this.simulationPanel.handleTool(x, y);
+        if (enable)
+        {
+            new Thread(() -> {
+                simulationPanel.handleTool(x, y);
+            }).start();
+        }
+
     }
 
-    public void paint(int x, int y)
+    private void delay()
     {
-        if (enable && !pressed)
-            this.simulationPanel.paintPreview(x, y);
+        try
+        {
+            Thread.sleep(5);
+        }
+        catch (InterruptedException e)
+        {
+            throw new RuntimeException(e);
+        }
     }
 }

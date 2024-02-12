@@ -4,8 +4,8 @@ import java.awt.*;
 import java.util.ArrayList;
 import javax.swing.*;
 
-import Animal.Ant;
-import Structure.Wall;
+import Animal.*;
+import Structure.*;
 import Tools.*;
 import Tuple.Tuple;
 import World.*;
@@ -55,9 +55,6 @@ public class SimulationPanel extends JPanel
         scaleX = (double) width / size;
         scaleY = (double) height / size;
 
-        System.out.println(scaleX);
-        System.out.println(scaleY);
-
         for (int i = 0; i < size; i++)
         {
             for (int j = 0; j < size; j++)
@@ -92,9 +89,10 @@ public class SimulationPanel extends JPanel
 
     public void handleTool(int x, int y)
     {
+        Tuple<ArrayList<Point>, IDrawable> result = this.tool.handle(x, y);
         Block[][] blocks = this.world.getBlocks();
-        String className = this.preview.getSecond().getClassName();
-        ArrayList<Point> points = this.preview.getFirst();
+        String className = result.getSecond().getClassName();
+        ArrayList<Point> points = result.getFirst();
 
         double invScaleX = 1.0 / scaleX;
         double invScaleY = 1.0 / scaleY;
@@ -105,6 +103,7 @@ public class SimulationPanel extends JPanel
             int blockY = (int) (point.y * invScaleY);
             blocks[blockY][blockX].place(this.drawableFromString(className));
         }
+        repaint();
     }
 
     public void paintPreview(int x, int y)
@@ -125,6 +124,8 @@ public class SimulationPanel extends JPanel
                 return new Wall();
             case "Ant":
                 return new Ant();
+            case "Empty":
+                return new Empty();
             default:
                 throw new IllegalArgumentException("Unknown object: " + name);
         }

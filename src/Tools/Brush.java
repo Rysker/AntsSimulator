@@ -16,7 +16,7 @@ public class Brush implements ITool
     @Override
     public Tuple<ArrayList<Point>, IDrawable> handle(int x, int y)
     {
-        ArrayList<Point> tuples = new ArrayList<>();
+        ArrayList<Point> points = new ArrayList<>();
 
         int startX = Math.max(0, x - radius);
         int startY = Math.max(0, y - radius);
@@ -24,15 +24,10 @@ public class Brush implements ITool
         int endY = Math.min(World.SIZE - 1, y + radius);
 
         for (int i = startX; i <= endX; i++)
-        {
             for (int j = startY; j <= endY; j++)
-            {
-                double distance = Math.sqrt(Math.pow(x - i, 2) + Math.pow(y - j, 2));
-                if (distance <= radius)
-                    tuples.add(new Point(i, j));
-            }
-        }
-        return new Tuple<>(tuples, thing);
+                points.add(new Point(i, j));
+
+        return new Tuple<>(points, thing);
     }
 
     public Brush(String className)
@@ -49,6 +44,8 @@ public class Brush implements ITool
                 return new Wall();
             case "Ant":
                 return new Ant();
+            case "Rubber":
+                return new Empty();
             default:
                 throw new IllegalArgumentException("Unknown brush type: " + className);
         }
