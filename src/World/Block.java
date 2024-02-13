@@ -21,10 +21,28 @@ public class Block
         this.pheromone = null;
         if(x > 100 &&  x < 200 && y > 100 && y < 200)
             this.structure = new Wall();
+        else if(x >= 450 && x <= 500 && y >=450 && y <=500 )
+            this.structure = new Nest();
         else
             this.structure = new Empty();
         this.x = x;
         this.y = y;
+    }
+
+    public double getPoints()
+    {
+        if(this.structure instanceof Wall)
+        {
+            return -100;
+        }else if(this.structure instanceof Food)
+        {
+            return 100;
+        }else if(this.pheromone != null)
+        {
+            return this.pheromone.getValue();
+        }else{
+            return 0.0;
+        }
     }
 
     public int getX()

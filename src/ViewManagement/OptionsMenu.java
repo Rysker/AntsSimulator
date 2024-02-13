@@ -11,20 +11,24 @@ public class OptionsMenu extends JPanel implements ActionListener
     private ButtonGroup buttonGroup;
     public OptionsMenu()
     {
-        setLayout(new GridLayout(3, 1));
+        setLayout(new GridLayout(4, 1));
 
         buttonGroup = new ButtonGroup();
 
         JToggleButton wallButton = createToggleButton("Wall");
         JToggleButton antButton = createToggleButton("Ant");
         JToggleButton rubberButton = createToggleButton("Rubber");
+        JToggleButton foodButton = createToggleButton("Food");
 
         buttonGroup.add(wallButton);
         buttonGroup.add(antButton);
+        buttonGroup.add(foodButton);
         buttonGroup.add(rubberButton);
+
 
         add(wallButton);
         add(antButton);
+        add(foodButton);
         add(rubberButton);
 
         SimulationPanel.tool = new Pointer();
@@ -55,6 +59,8 @@ public class OptionsMenu extends JPanel implements ActionListener
             case "Rubber":
                 SimulationPanel.tool = new Brush("Rubber");
                 break;
+            case "Food":
+                SimulationPanel.tool = new Brush("Food");
             default:
                 break;
         }

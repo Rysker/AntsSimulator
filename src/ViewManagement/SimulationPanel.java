@@ -21,7 +21,7 @@ public class SimulationPanel extends JPanel
     public SimulationPanel()
     {
         setBackground(Color.WHITE);
-        setPreferredSize(new Dimension(400, 400));
+        setPreferredSize(new Dimension(1000, 1000));
         setBorder(BorderFactory.createLineBorder(Color.YELLOW, 2));
         this.tool = new Pointer();
     }
@@ -126,6 +126,8 @@ public class SimulationPanel extends JPanel
                 return new Ant();
             case "Empty":
                 return new Empty();
+            case "Food":
+                return new Food();
             default:
                 throw new IllegalArgumentException("Unknown object: " + name);
         }

@@ -46,6 +46,8 @@ public class Brush implements ITool
                 return new Ant();
             case "Rubber":
                 return new Empty();
+            case "Food":
+                return new Food();
             default:
                 throw new IllegalArgumentException("Unknown brush type: " + className);
         }
