@@ -4,6 +4,12 @@ import java.awt.*;
 
 public class Empty extends AStructure
 {
+
+    public Empty()
+    {
+        this.isDestructible = true;
+    }
+
     @Override
     public Color getColor()
     {

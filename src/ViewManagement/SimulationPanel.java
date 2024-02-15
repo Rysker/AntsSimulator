@@ -21,7 +21,7 @@ public class SimulationPanel extends JPanel
     public SimulationPanel()
     {
         setBackground(Color.WHITE);
-        setPreferredSize(new Dimension(1000, 1000));
+        setPreferredSize(new Dimension(800, 800));
         setBorder(BorderFactory.createLineBorder(Color.YELLOW, 2));
         this.tool = new Pointer();
     }
@@ -60,30 +60,28 @@ public class SimulationPanel extends JPanel
             for (int j = 0; j < size; j++)
             {
                 Block block = blocks[i][j];
-                int x = (int) (j * scaleX);
-                int y = (int) (i * scaleY);
-                int blockWidth = (int) Math.max(1, scaleX);
-                int blockHeight = (int) Math.max(1, scaleY);
-
                 g.setColor(block.getColor());
-                g.fillRect(x, y, blockWidth, blockHeight);
+                g.fillRect(i, j, 1, 1);
             }
         }
     }
 
     private void drawPreview(Graphics g)
     {
+        Block[][] blocks = this.world.getBlocks();
+        Block block;
+        AStructure block_structure;
         ArrayList<Point> points = this.preview.getFirst();
         Color color = this.preview.getSecond().getColor();
-        for (int i = 0; i < points.size(); i++)
+        for (Point point: points)
         {
-            Point point = points.get(i);
-            g.setColor(color);
-            int x = point.x;
-            int y = point.y;
-            int blockWidth = (int) Math.max(1, scaleX);
-            int blockHeight = (int) Math.max(1, scaleY);
-            g.fillRect(x, y, blockWidth,blockHeight);
+            block = blocks[point.x][point.y];
+            block_structure = block.getStructure();
+            if(block_structure.isDestructible())
+            {
+                g.setColor(color);
+                g.fillRect(point.x, point.y, 1,1);
+            }
         }
     }
 
@@ -91,17 +89,17 @@ public class SimulationPanel extends JPanel
     {
         Tuple<ArrayList<Point>, IDrawable> result = this.tool.handle(x, y);
         Block[][] blocks = this.world.getBlocks();
+        Block block;
+        AStructure block_structure;
         String className = result.getSecond().getClassName();
         ArrayList<Point> points = result.getFirst();
 
-        double invScaleX = 1.0 / scaleX;
-        double invScaleY = 1.0 / scaleY;
-
         for (Point point : points)
         {
-            int blockX = (int) (point.x * invScaleX);
-            int blockY = (int) (point.y * invScaleY);
-            blocks[blockY][blockX].place(this.drawableFromString(className));
+            block = blocks[point.x][point.y];
+            block_structure = block.getStructure();
+            if(block_structure.isDestructible())
+                blocks[point.x][point.y].place(this.drawableFromString(className));
         }
         repaint();
     }
@@ -121,7 +119,7 @@ public class SimulationPanel extends JPanel
         switch(name)
         {
             case "Wall":
-                return new Wall();
+                return new Wall(true);
             case "Ant":
                 return new Ant();
             case "Empty":

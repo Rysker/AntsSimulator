@@ -41,7 +41,7 @@ public class Brush implements ITool
         switch(className)
         {
             case "Wall":
-                return new Wall();
+                return new Wall(true);
             case "Ant":
                 return new Ant();
             case "Rubber":

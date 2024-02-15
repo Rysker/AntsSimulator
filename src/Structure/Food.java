@@ -2,10 +2,17 @@ package Structure;
 
 import java.awt.*;
 
-public class Food extends AStructure{
+public class Food extends AStructure
+{
+
+    public Food()
+    {
+        this.isDestructible = false;
+    }
 
     @Override
-    public String getClassName() {
+    public String getClassName()
+    {
         return "Food";
     }
 

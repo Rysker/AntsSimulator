@@ -12,16 +12,14 @@ public class Block
     private int x;
     private int y;
     private AStructure structure;
-    private Pheromone pheromone;
+    private int pheromone;
     private ArrayList<AAnimal> animals;
 
     public Block(int x, int y)
     {
         this.animals = new ArrayList<>();
-        this.pheromone = null;
-        if(x > 100 &&  x < 200 && y > 100 && y < 200)
-            this.structure = new Wall();
-        else if(x >= 450 && x <= 500 && y >=450 && y <=500 )
+        this.pheromone = 0;
+        if(x >= 375 && x <= 425 && y >= 375 && y <= 425)
             this.structure = new Nest();
         else
             this.structure = new Empty();
@@ -32,17 +30,11 @@ public class Block
     public double getPoints()
     {
         if(this.structure instanceof Wall)
-        {
             return -100;
-        }else if(this.structure instanceof Food)
-        {
+        else if(this.structure instanceof Food)
             return 100;
-        }else if(this.pheromone != null)
-        {
-            return this.pheromone.getValue();
-        }else{
-            return 0.0;
-        }
+        else
+            return pheromone;
     }
 
     public int getX()
@@ -68,6 +60,11 @@ public class Block
     public int getY()
     {
         return y;
+    }
+
+    public AStructure getStructure()
+    {
+        return structure;
     }
 
     public Color getColor()

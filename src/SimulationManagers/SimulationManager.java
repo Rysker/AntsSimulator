@@ -4,7 +4,7 @@ import World.*;
 import ViewManagement.*;
 public class SimulationManager
 {
-    private final int size = 1000;
+    private final int size = 800;
     private World world;
     private MainFrame window;
 

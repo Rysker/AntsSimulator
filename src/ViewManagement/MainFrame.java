@@ -11,6 +11,7 @@ public class MainFrame extends JFrame
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.layout = LayoutPanel.getInstance();
         this.layout.getSimulationPanel().setWorld(world);
+        setResizable(false);
         getContentPane().add(this.layout);
         pack();
         setLocationRelativeTo(null);
