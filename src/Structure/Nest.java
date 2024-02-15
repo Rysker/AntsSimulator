@@ -4,11 +4,19 @@ import java.awt.*;
 
 public class Nest extends AStructure
 {
-    private int collectedFood=0;
+    private int collectedFood = 0;
+    private static Nest instance = null;
 
-    public Nest()
+    private Nest()
     {
         this.isDestructible = false;
+    }
+
+    public static Nest getInstance()
+    {
+        if(instance == null)
+            instance = new Nest();
+        return instance;
     }
 
     @Override
