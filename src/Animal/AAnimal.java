@@ -1,7 +1,7 @@
 package Animal;
 
 import Drawable.IDrawable;
-import Tuple.Tuple;
+import DataTypes.Tuple;
 
 public abstract class AAnimal implements IDrawable
 {

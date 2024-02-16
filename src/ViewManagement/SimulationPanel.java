@@ -7,7 +7,7 @@ import javax.swing.*;
 import Animal.*;
 import Structure.*;
 import Tools.*;
-import Tuple.Tuple;
+import DataTypes.Tuple;
 import World.*;
 import Drawable.*;
 

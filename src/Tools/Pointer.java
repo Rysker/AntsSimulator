@@ -4,7 +4,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 import Drawable.IDrawable;
-import Tuple.Tuple;
+import DataTypes.Tuple;
 
 public class Pointer implements ITool
 {

@@ -1,14 +1,16 @@
 package SimulationManagers;
 
+import Animal.Ant;
 import Strategies.Strategy;
-import Strategies.byPheromone;
-import Strategies.randomMovement;
+import Strategies.generalStrategy;
 import World.*;
 import ViewManagement.*;
+import DataTypes.*;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class SimulationManager implements ActionListener
 {
@@ -16,7 +18,6 @@ public class SimulationManager implements ActionListener
     private World world;
     private MainFrame window;
     private Timer timer;
-
     private final Strategy strategy;
 
     public SimulationManager()
@@ -26,7 +27,7 @@ public class SimulationManager implements ActionListener
         this.window.setVisible(true);
 
         // Strategy
-        this.strategy = new randomMovement();
+        this.strategy = new generalStrategy();
 
         // Timer
         timer = new Timer(500, this);
@@ -36,7 +37,9 @@ public class SimulationManager implements ActionListener
     public void nextTick()
     {
         //Add moving all ants
+        ArrayList<Tuple<Integer, Integer>> last_pos = this.getLastPositions();
         strategy.moveAnts(World.ANTS, world.getBlocks());
+        this.world.updatePheromones(last_pos);
         this.redrawSimulation();
     }
 
@@ -47,7 +50,19 @@ public class SimulationManager implements ActionListener
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
+    public void actionPerformed(ActionEvent e)
+    {
         nextTick();
     }
+
+    public ArrayList<Tuple<Integer, Integer>> getLastPositions()
+    {
+        ArrayList<Tuple<Integer, Integer>> result = new ArrayList<>();
+        for(Ant ant: this.world.ANTS)
+            result.add(ant.getPosition());
+        return result;
+    }
+
+
+
 }

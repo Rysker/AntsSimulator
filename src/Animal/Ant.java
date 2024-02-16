@@ -1,23 +1,22 @@
 package Animal;
 
-
-import Tuple.Tuple;
-
 import java.awt.*;
+
+import DataTypes.*;
+
 
 public class Ant extends AAnimal
 {
     private int posX;
     private int posY;
-
-    private int lastPosX;
-    private int lastPosY;
+    private Direction direction;
 
     public Ant(Tuple<Integer, Integer> pos)
     {
         this.lastPosition = null;
         this.posX = pos.getFirst();
         this.posY = pos.getSecond();
+        this.direction = randomDirection();
     }
 
     public Tuple<Integer, Integer> getPosition()
@@ -45,9 +44,9 @@ public class Ant extends AAnimal
         this.posX += 1;
     }
 
-    public Tuple<Integer, Integer> getLastPosition()
+    public Direction getDirection()
     {
-        return new Tuple<>(lastPosX, lastPosY);
+        return this.direction;
     }
 
     public Color getColor()
@@ -58,6 +57,41 @@ public class Ant extends AAnimal
     public String getClassName()
     {
         return "Ant";
+    }
+
+    public void changePosition(int x, int y)
+    {
+        this.posX = x;
+        this.posY = y;
+    }
+
+    private Direction randomDirection()
+    {
+        int random_number = (int) (Math.random() * 4);
+
+        switch (random_number)
+        {
+            case 0 -> { // UP
+                return Direction.UP;
+            }
+            case 1 -> { // RIGHT
+                return Direction.RIGHT;
+            }
+            case 2 -> { // DOWN
+                return Direction.DOWN;
+            }
+            case 3 -> { // LEFT
+                return Direction.LEFT;
+            }
+            default -> {
+            }
+        }
+        return Direction.UP;
+    }
+
+    public void changeDirection(Direction direction)
+    {
+        this.direction = direction;
     }
 
 }

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import Drawable.IDrawable;
 import Structure.*;
-import Tuple.Tuple;
+import DataTypes.Tuple;
 import World.*;
 
 public class Brush implements ITool

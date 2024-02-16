@@ -1,4 +1,4 @@
-package Tuple;
+package DataTypes;
 
 import java.util.Objects;
 

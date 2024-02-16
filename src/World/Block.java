@@ -29,7 +29,7 @@ public class Block
         if(this.structure instanceof Wall)
             return 0;
         else if(this.structure instanceof Food)
-            return 100;
+            return 160001;
         else
             return pheromone;
     }
@@ -75,6 +75,18 @@ public class Block
             return this.animals.get(0).getColor();
         else
             return this.structure.getColor();
+    }
+
+    public int getPheromone()
+    {
+        return this.pheromone;
+    }
+
+    public void updatePheromone()
+    {
+        this.pheromone += 120;
+        if(this.pheromone > 20000)
+            this.pheromone = 20000;
     }
 
 }

@@ -1,10 +1,9 @@
 package World;
 
-import Animal.AAnimal;
 import Animal.Ant;
 import Structure.Nest;
 import Structure.Wall;
-import Tuple.Tuple;
+import DataTypes.Tuple;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,4 +59,11 @@ public class World
     {
         return this.blocks;
     }
+
+    public void updatePheromones(ArrayList<Tuple<Integer, Integer>> positions)
+    {
+        for(Tuple<Integer, Integer> pos: positions)
+            this.blocks[pos.getFirst()][pos.getSecond()].updatePheromone();
+    }
+
 }

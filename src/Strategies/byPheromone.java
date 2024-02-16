@@ -1,7 +1,9 @@
+
+/*
 package Strategies;
 
 import Animal.Ant;
-import Tuple.Tuple;
+import DataTypes.*;
 import World.Block;
 
 import java.util.Arrays;
@@ -11,7 +13,8 @@ import java.util.Random;
 // Pheromones determine choice of next move
 public class byPheromone implements Strategy {
 
-    public void moveAnts(List<Ant> ants, Block[][] blocks) {
+    public void moveAnts(List<Ant> ants, Block[][] blocks)
+    {
         Random random = new Random();
 
         for(Ant ant : ants)
@@ -47,16 +50,17 @@ public class byPheromone implements Strategy {
         }
     }
 
-    private void makeMoveFromDirection(Ant ant, int direction)
+    private void makeMoveFromDirection(Ant ant, Direction direction)
     {
         switch (direction)
         {
-            case 0 -> ant.moveUp();
-            case 1 -> ant.moveRight();
-            case 2 -> ant.moveDown();
-            case 3 -> ant.moveLeft();
+            case UP -> ant.moveUp();
+            case RIGHT -> ant.moveRight();
+            case DOWN -> ant.moveDown();
+            case LEFT -> ant.moveLeft();
             default -> throw new IllegalStateException("Unexpected value: " + direction);
         }
     }
 
 }
+*/

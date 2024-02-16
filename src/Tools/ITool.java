@@ -1,7 +1,7 @@
 package Tools;
 
 import Drawable.IDrawable;
-import Tuple.Tuple;
+import DataTypes.Tuple;
 
 import java.awt.*;
 import java.util.ArrayList;
