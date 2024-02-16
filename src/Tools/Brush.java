@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 import Drawable.IDrawable;
 import Structure.*;
-import Animal.*;
 import Tuple.Tuple;
 import World.*;
 
@@ -42,8 +41,6 @@ public class Brush implements ITool
         {
             case "Wall":
                 return new Wall(true);
-            case "Ant":
-                return new Ant();
             case "Rubber":
                 return new Empty();
             case "Food":

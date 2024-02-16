@@ -40,8 +40,20 @@ public class SimulationPanel extends JPanel
     {
         super.paintComponent(g);
         drawGrid(g);
+        drawAnts(g);
         if(preview != null)
             drawPreview(g);
+    }
+
+    private void drawAnts(Graphics g)
+    {
+        final int radius = 1;
+
+        for(Ant ant : World.ANTS)
+        {
+            g.setColor(ant.getColor());
+            g.fillRect(ant.getPosition().getFirst() , ant.getPosition().getSecond(), radius, radius);
+        }
     }
 
     private void drawGrid(Graphics g)
@@ -120,8 +132,6 @@ public class SimulationPanel extends JPanel
         {
             case "Wall":
                 return new Wall(true);
-            case "Ant":
-                return new Ant();
             case "Empty":
                 return new Empty();
             case "Food":

@@ -19,10 +19,7 @@ public class Block
     {
         this.animals = new ArrayList<>();
         this.pheromone = 0;
-        if(x >= 375 && x <= 425 && y >= 375 && y <= 425)
-            this.structure = Nest.getInstance();
-        else
-            this.structure = new Empty();
+        this.structure = new Empty();
         this.x = x;
         this.y = y;
     }
@@ -65,6 +62,11 @@ public class Block
     public AStructure getStructure()
     {
         return structure;
+    }
+
+    public void setStructure(AStructure struct)
+    {
+        this.structure = struct;
     }
 
     public Color getColor()

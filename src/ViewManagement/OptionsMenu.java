@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
+import World.*;
 
 import Tools.*;
 public class OptionsMenu extends JPanel implements ActionListener
@@ -54,7 +55,7 @@ public class OptionsMenu extends JPanel implements ActionListener
                 SimulationPanel.tool = new Brush("Wall");
                 break;
             case "Ant":
-                SimulationPanel.tool = new Brush("Ant");
+                World.spawnAnt();
                 break;
             case "Rubber":
                 SimulationPanel.tool = new Brush("Rubber");
