@@ -18,7 +18,7 @@ public class Block
     public Block(int x, int y)
     {
         this.animals = new ArrayList<>();
-        this.pheromone = 0;
+        this.pheromone = 1;
         this.structure = new Empty();
         this.x = x;
         this.y = y;
@@ -27,7 +27,7 @@ public class Block
     public double getPoints()
     {
         if(this.structure instanceof Wall)
-            return -100;
+            return 0;
         else if(this.structure instanceof Food)
             return 100;
         else

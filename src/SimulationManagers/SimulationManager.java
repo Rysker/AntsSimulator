@@ -29,7 +29,7 @@ public class SimulationManager implements ActionListener
         this.strategy = new randomMovement();
 
         // Timer
-        timer = new Timer(1000, this);
+        timer = new Timer(500, this);
         timer.start();
     }
 
