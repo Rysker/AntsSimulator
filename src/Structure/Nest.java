@@ -30,4 +30,9 @@ public class Nest extends AStructure
     {
         return new Color(125, 9, 143);
     }
+
+    public void addFood()
+    {
+        this.collectedFood += 1;
+    }
 }

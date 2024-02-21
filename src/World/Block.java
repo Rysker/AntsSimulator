@@ -84,9 +84,20 @@ public class Block
 
     public void updatePheromone()
     {
-        this.pheromone += 120;
-        if(this.pheromone > 20000)
-            this.pheromone = 20000;
+        this.pheromone += 300;
+        if(this.pheromone > 200000)
+            this.pheromone = 200000;
     }
+
+    public void weakenPheromone()
+    {
+        this.pheromone -= 20;
+    }
+
+    public void setPheromone()
+    {
+        this.pheromone = 200000;
+    }
+
 
 }

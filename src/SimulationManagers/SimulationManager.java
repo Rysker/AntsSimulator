@@ -30,7 +30,7 @@ public class SimulationManager implements ActionListener
         this.strategy = new generalStrategy();
 
         // Timer
-        timer = new Timer(500, this);
+        timer = new Timer(5, this);
         timer.start();
     }
 

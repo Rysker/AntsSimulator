@@ -9,14 +9,18 @@ public class Ant extends AAnimal
 {
     private int posX;
     private int posY;
+    private boolean food;
     private Direction direction;
+    private Color color;
 
     public Ant(Tuple<Integer, Integer> pos)
     {
         this.lastPosition = null;
         this.posX = pos.getFirst();
         this.posY = pos.getSecond();
+        this.food = false;
         this.direction = randomDirection();
+        this.color = new Color(255, 255, 255);
     }
 
     public Tuple<Integer, Integer> getPosition()
@@ -51,7 +55,7 @@ public class Ant extends AAnimal
 
     public Color getColor()
     {
-        return new Color(157, 6, 6);
+        return this.color;
     }
     @Override
     public String getClassName()
@@ -92,6 +96,28 @@ public class Ant extends AAnimal
     public void changeDirection(Direction direction)
     {
         this.direction = direction;
+    }
+
+    public void turnDirection()
+    {
+        this.direction = this.direction.getOpposite();
+    }
+
+    public void addFood()
+    {
+        this.food = true;
+        this.color = new Color(9, 117, 0);
+    }
+
+    public void removeFood()
+    {
+        this.food = false;
+        this.color = new Color(255, 255, 255);
+    }
+
+    public boolean getFood()
+    {
+        return this.food;
     }
 
 }

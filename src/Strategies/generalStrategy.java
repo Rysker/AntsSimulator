@@ -4,6 +4,7 @@ import Animal.Ant;
 import DataTypes.Direction;
 import DataTypes.Tuple;
 import World.Block;
+import Structure.*;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -20,15 +21,20 @@ public class generalStrategy implements Strategy
             Tuple<Integer, Integer> pos = ant.getPosition();
             Direction direction = ant.getDirection();
             ArrayList<Block> new_blocks = blocksFromDirection(pos, direction, blocks);
-            Tuple<ArrayList<Double>, Integer> result = this.checkBlocks(new_blocks);
-            ArrayList<Double> chances = result.getFirst();
-            int sum = result.getSecond();
-            if(this.firstDecision() <= 0.05 || sum == 0)
-                this.randomChoice(ant, new_blocks);
-            else
-                this.pheromoneChoice(ant, new_blocks, chances);
+            if(!(foodNearby(new_blocks, ant) && ant.getFood() == false))
+            {
+                Tuple<ArrayList<Double>, Integer> result = this.checkBlocks(new_blocks);
+                ArrayList<Double> chances = result.getFirst();
+                int sum = result.getSecond();
+                double random_chances = 0.05;
+                if(ant.getFood() == true)
+                    random_chances = 0.01;
+                if(this.firstDecision() <= random_chances || sum == 0)
+                    this.randomChoice(ant, new_blocks);
+                else
+                    this.pheromoneChoice(ant, new_blocks, chances);
+            }
         }
-
     }
 
     private ArrayList<Block> blocksFromDirection(Tuple<Integer, Integer> pos, Direction direction, Block[][] blocks)
@@ -38,9 +44,9 @@ public class generalStrategy implements Strategy
         switch(direction)
         {
             case UP -> {
+                result.add(blocks[point.x][point.y - 1]);
                 result.add(blocks[point.x + 1][point.y]);
                 result.add(blocks[point.x - 1][point.y]);
-                result.add(blocks[point.x][point.y - 1]);
             }
 
             case RIGHT -> {
@@ -56,9 +62,9 @@ public class generalStrategy implements Strategy
             }
 
             case DOWN -> {
+                result.add(blocks[point.x][point.y + 1]);
                 result.add(blocks[point.x + 1][point.y]);
                 result.add(blocks[point.x - 1][point.y]);
-                result.add(blocks[point.x][point.y + 1]);
             }
             default -> throw new IllegalStateException("Unexpected value: " + direction);
         }
@@ -91,12 +97,20 @@ public class generalStrategy implements Strategy
 
     private void randomChoice(Ant ant, ArrayList<Block> blocks)
     {
-        int random_number = (int) (Math.random() * 3);
-        Block block = blocks.get(random_number);
-        Point point = new Point(block.getX(), block.getY());
-        Direction new_direction = directionFromChange(ant.getPosition(), new Tuple<>(block.getX(), block.getY()));
-        ant.changePosition(point.x, point.y);
-        ant.changeDirection(new_direction);
+        Block block;
+        int random_number = (int) (Math.random() * 2) + 1;
+        int choice = (int) (Math.random() * 10);
+        if(choice <= 7)
+            block = blocks.get(0);
+        else
+            block = blocks.get(random_number);
+        if(!isPassable(block.getStructure(), ant))
+        {
+            Point point = new Point(block.getX(), block.getY());
+            Direction new_direction = directionFromChange(ant.getPosition(), new Tuple<>(block.getX(), block.getY()));
+            ant.changePosition(point.x, point.y);
+            ant.changeDirection(new_direction);
+        }
     }
 
     private void pheromoneChoice(Ant ant, ArrayList<Block> blocks, ArrayList<Double> chances)
@@ -111,10 +125,13 @@ public class generalStrategy implements Strategy
             if (randomValue <= cumulativeProbability)
             {
                 Block block = blocks.get(i);
-                Point point = new Point(block.getX(), block.getY());
-                Direction new_direction = directionFromChange(ant.getPosition(), new Tuple<>(block.getX(), block.getY()));
-                ant.changePosition(point.x, point.y);
-                ant.changeDirection(new_direction);
+                if(!isPassable(block.getStructure(), ant))
+                {
+                    Point point = new Point(block.getX(), block.getY());
+                    Direction new_direction = directionFromChange(ant.getPosition(), new Tuple<>(block.getX(), block.getY()));
+                    ant.changePosition(point.x, point.y);
+                    ant.changeDirection(new_direction);
+                }
                 break;
             }
         }
@@ -138,4 +155,43 @@ public class generalStrategy implements Strategy
             return Direction.UP;
     }
 
+
+    private boolean isPassable(AStructure structure, Ant ant)
+    {
+        if (structure instanceof Food)
+        {
+            ant.turnDirection();
+            ant.addFood();
+            return true;
+        }
+        else if(structure instanceof Wall)
+        {
+            ant.turnDirection();
+            return true;
+        }
+        else if(structure instanceof Nest)
+        {
+            if(ant.getFood() == true)
+                ((Nest) structure).addFood();
+            ant.removeFood();
+            ant.turnDirection();
+            return true;
+        }
+        return false;
+    }
+
+
+    private boolean foodNearby(ArrayList<Block> blocks, Ant ant)
+    {
+        for(Block block: blocks)
+        {
+            if (block.getStructure() instanceof Food)
+            {
+                ant.turnDirection();
+                ant.addFood();
+                return true;
+            }
+        }
+        return false;
+    }
 }

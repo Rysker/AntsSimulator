@@ -19,14 +19,16 @@ public class World
     {
         SIZE = size;
         ANTS = new ArrayList<>();
-        this.blocks = new Block[size][size];
-        initializeWorld(size);
+        this.blocks = new Block[SIZE][SIZE];
+        initializeWorld();
     }
 
-    private void initializeWorld(int size)
+    private void initializeWorld()
     {
-        for(int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
+        for(int i = 0; i < SIZE; i++)
+        {
+            for (int j = 0; j < SIZE; j++)
+            {
                 blocks[i][j] = new Block(i, j);
 
                 // Nest
@@ -36,6 +38,12 @@ public class World
                 // Walls on simulation edges
                 if(i == SIZE-1 || i == 0 || j == 0 || j ==SIZE-1)
                     blocks[i][j].setStructure(new Wall(false));
+
+                //Setting pheromones for testing purposes
+                if(i == 0 && j <= 400)
+                    blocks[i][j].setPheromone();
+                if(j == 400 && i <= 400)
+                    blocks[i][j].setPheromone();
             }
         }
     }
@@ -52,7 +60,8 @@ public class World
         int randomNumber = (int) (Math.random() * possiblePosition.length);
 
         System.out.println(randomNumber);
-        ANTS.add(new Ant(possiblePosition[randomNumber]));
+        for(int i = 0; i < 1000; i ++)
+            ANTS.add(new Ant(possiblePosition[randomNumber]));
     }
 
     public Block[][] getBlocks()
@@ -64,6 +73,10 @@ public class World
     {
         for(Tuple<Integer, Integer> pos: positions)
             this.blocks[pos.getFirst()][pos.getSecond()].updatePheromone();
+        for(int i = 0; i < SIZE; i++)
+            for (int j = 0; j < SIZE; j++)
+                this.blocks[i][j].weakenPheromone();
+
     }
 
 }
