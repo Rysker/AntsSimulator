@@ -26,9 +26,9 @@ public class generalStrategy implements Strategy
                 Tuple<ArrayList<Double>, Integer> result = this.checkBlocks(new_blocks);
                 ArrayList<Double> chances = result.getFirst();
                 int sum = result.getSecond();
-                double random_chances = 0.05;
+                double random_chances = 0.25;
                 if(ant.getFood() == true)
-                    random_chances = 0.01;
+                    random_chances = 0.1;
                 if(this.firstDecision() <= random_chances || sum == 0)
                     this.randomChoice(ant, new_blocks);
                 else

@@ -39,11 +39,11 @@ public class World
                 if(i == SIZE-1 || i == 0 || j == 0 || j ==SIZE-1)
                     blocks[i][j].setStructure(new Wall(false));
 
-                //Setting pheromones for testing purposes
-                if(i == 0 && j <= 400)
-                    blocks[i][j].setPheromone();
-                if(j == 400 && i <= 400)
-                    blocks[i][j].setPheromone();
+//                //Setting pheromones for testing purposes
+//                if(i == 0 && j <= 400)
+//                    blocks[i][j].setPheromone();
+//                if(j == 400 && i <= 400)
+//                    blocks[i][j].setPheromone();
             }
         }
     }
@@ -60,7 +60,7 @@ public class World
         int randomNumber = (int) (Math.random() * possiblePosition.length);
 
         System.out.println(randomNumber);
-        for(int i = 0; i < 1000; i ++)
+        for(int i = 0; i < 10; i ++)
             ANTS.add(new Ant(possiblePosition[randomNumber]));
     }
 
@@ -69,10 +69,14 @@ public class World
         return this.blocks;
     }
 
-    public void updatePheromones(ArrayList<Tuple<Integer, Integer>> positions)
-    {
-        for(Tuple<Integer, Integer> pos: positions)
-            this.blocks[pos.getFirst()][pos.getSecond()].updatePheromone();
+    public void updatePheromones(ArrayList<Tuple<Integer, Integer>> positions) {
+        for (Ant ant : ANTS)
+        {
+            Tuple<Integer, Integer> pos = ant.getPosition();
+            this.blocks[pos.getFirst()][pos.getSecond()].updatePheromone(ant.getFood());
+        }
+//        for(Tuple<Integer, Integer> pos: positions)
+//            this.blocks[pos.getFirst()][pos.getSecond()].updatePheromone();
         for(int i = 0; i < SIZE; i++)
             for (int j = 0; j < SIZE; j++)
                 this.blocks[i][j].weakenPheromone();

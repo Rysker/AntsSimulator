@@ -82,16 +82,24 @@ public class Block
         return this.pheromone;
     }
 
-    public void updatePheromone()
+    public void updatePheromone(boolean food)
     {
-        this.pheromone += 300;
+        if(food)
+            this.pheromone += 100;
+        else
+            this.pheromone += 20;
+
         if(this.pheromone > 200000)
             this.pheromone = 200000;
     }
 
     public void weakenPheromone()
     {
-        this.pheromone -= 20;
+        this.pheromone -= 1;
+        if(this.pheromone < 0)
+        {
+            this.pheromone = 0;
+        }
     }
 
     public void setPheromone()

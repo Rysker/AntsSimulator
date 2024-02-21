@@ -3,6 +3,7 @@ package SimulationManagers;
 import Animal.Ant;
 import Strategies.Strategy;
 import Strategies.generalStrategy;
+import Structure.Nest;
 import World.*;
 import ViewManagement.*;
 import DataTypes.*;
@@ -38,9 +39,10 @@ public class SimulationManager implements ActionListener
     {
         //Add moving all ants
         ArrayList<Tuple<Integer, Integer>> last_pos = this.getLastPositions();
-        strategy.moveAnts(World.ANTS, world.getBlocks());
         this.world.updatePheromones(last_pos);
+        strategy.moveAnts(World.ANTS, world.getBlocks());
         this.redrawSimulation();
+        System.out.println(Nest.getInstance().getCollectedFood());
     }
 
     private void redrawSimulation()
